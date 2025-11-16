@@ -1,0 +1,45 @@
+{
+    "name": "theofanisv/filament-barcode-scanner",
+    "description": "Camera-based barcode scanner for Filament v4 with dynamic JavaScript loading",
+    "keywords": ["laravel", "filament", "barcode", "qrcode", "scanner"],
+    "homepage": "https://github.com/theofanisv/filament-barcode-scanner",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Theofanis Vardatsikos",
+            "email": "vardtheo@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^8.1|^8.2|^8.3",
+        "filament/filament": "^4.0",
+        "spatie/laravel-package-tools": "^1.14"
+    },
+    "require-dev": {
+        "laravel/pint": "^1.0",
+        "nunomaduro/collision": "^8.0",
+        "orchestra/testbench": "^9.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Theograms\\FilamentBarcodeScanner\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Theograms\\FilamentBarcodeScanner\\Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "format": "vendor/bin/pint"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Theograms\\FilamentBarcodeScanner\\FilamentBarcodeScannerServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
