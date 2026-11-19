@@ -1,6 +1,6 @@
 import { BrowserMultiFormatReader, NotFoundException } from '@zxing/library';
 
-function barcodeScannerComponent({
+export default function barcodeScannerComponent({
     targetField = null,
     scannerConfig = {},
     autoStop = true
@@ -27,6 +27,9 @@ function barcodeScannerComponent({
          * Open scanner modal and initialize
          */
         async openScanner() {
+            // Already open: a second press while the script was still loading must not start the camera twice.
+            if (this.isScanning) return;
+
             try {
                 this.isScanning = true;
                 this.statusMessage = 'Loading camera...';
@@ -218,6 +221,3 @@ function barcodeScannerComponent({
         }
     }
 }
-
-// Make available globally
-window.barcodeScannerComponent = barcodeScannerComponent;

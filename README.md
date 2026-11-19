@@ -7,7 +7,7 @@ A production-ready Filament v4 package for camera-based barcode and QR code scan
 
 ## Features
 
-- **Dynamic JavaScript Loading**: Assets load only when needed
+- **Loaded on demand**: the scanner's script (about 400 KB) is fetched when a scan button is first pressed, not with the page
 - **Auto-Stop Functionality**: Automatically stops scanning after first successful scan
 - **Mobile-Optimized**: Automatic back camera selection on mobile devices
 - **Seamless Integration**: Updates Filament form fields via Livewire
@@ -37,7 +37,18 @@ composer require theofanisv/filament-barcode-scanner
 php artisan filament:assets
 ```
 
-### Step 3: Clear Cache
+### Step 3: Let your theme compile the popup's classes
+
+The scanner's popup is written with Tailwind classes. Add the package's views to the sources of the theme of every
+panel that shows a scan button, then rebuild the theme:
+
+```css
+@source '../../../vendor/theofanisv/filament-barcode-scanner/resources/views/**/*.blade.php';
+```
+
+Without it the popup is not an overlay: it opens inside the form, unstyled.
+
+### Step 4: Clear Cache
 
 ```bash
 php artisan optimize:clear

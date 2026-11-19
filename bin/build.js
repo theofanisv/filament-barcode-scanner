@@ -48,5 +48,7 @@ compile({
     ...defaultOptions,
     entryPoints: ['./resources/js/barcode-scanner.js'],
     outfile: './resources/dist/barcode-scanner.js',
-    format: 'iife', // Immediately Invoked Function Expression for browser
+    // An ES module with the component as its default export: Filament fetches it as an Alpine component when the
+    // scanner is first opened (see the button's view), instead of printing it on every page.
+    format: 'esm',
 })

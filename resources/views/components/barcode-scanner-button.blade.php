@@ -1,11 +1,22 @@
+{{--
+    The scanner itself (the barcode reader, about 400 KB of script) is fetched when the button is first pressed, and
+    opens as soon as it has arrived. Until then the page holds only the button. Every press after that opens it again.
+--}}
 <div
-    x-data="barcodeScannerComponent({
-        targetField: @js($getTargetField()),
-        scannerConfig: @js($getScannerConfig()),
-        autoStop: @js($getAutoStop()),
-    })"
+    x-data="{ presses: 0, loaded: false }"
     {{ $attributes->merge(['class' => 'filament-barcode-scanner']) }}
 >
+    <template x-if="presses > 0">
+    <div
+        x-load
+        x-load-src="{{ \Filament\Support\Facades\FilamentAsset::getAlpineComponentSrc('barcode-scanner', 'theofanisv/filament-barcode-scanner') }}"
+        x-data="barcodeScannerComponent({
+            targetField: @js($getTargetField()),
+            scannerConfig: @js($getScannerConfig()),
+            autoStop: @js($getAutoStop()),
+        })"
+        x-effect="presses && $nextTick(() => { loaded = true; openScanner() })"
+    >
     <!-- Scanner Modal/Container -->
     <div
         x-show="isScanning"
@@ -75,12 +86,16 @@
         </div>
     </div>
 
-    <!-- Trigger Button -->
+    </div>
+    </template>
+
+    <!-- Trigger Button: dimmed between the first press and the scanner's arrival -->
     <x-filament::button
         :color="$getColor()"
         :icon="$getIcon()"
         type="button"
-        @click="openScanner()"
+        @click="presses++"
+        x-bind:style="presses && ! loaded ? 'opacity: .6' : ''"
     >
         {{ $getLabel() }}
     </x-filament::button>
