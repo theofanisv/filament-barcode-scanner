@@ -243,6 +243,28 @@ public function handleBarcodeScanned($data)
 | `aspectRatio` | Camera aspect ratio | `1.0` |
 | `disableFlip` | Disable mirrored scanning | `false` |
 
+## Translations
+
+The popup's texts (its title, the camera buttons and the status lines) are written in English and translated with
+Laravel's JSON translations. Greek comes with the package (`resources/lang/el.json`). To change a text or add a
+language, give the same English key a line in your app's own `lang/<locale>.json`, which takes precedence:
+
+```json
+{
+    "Scan Barcode": "…",
+    "Select Camera": "…",
+    "Start Camera": "…",
+    "Loading camera...": "…",
+    "Point camera at barcode...": "…",
+    "Failed to access camera. Please check permissions.": "…",
+    "Failed to start camera. Please try again.": "…",
+    "Scanned: :code": "… :code",
+    "Scanned successfully, but failed to update field": "…"
+}
+```
+
+`:code` is replaced by the scanned code. The button's own label is the one you give with `->label()`.
+
 ## Server Setup
 
 ### Ubuntu/Nginx Configuration

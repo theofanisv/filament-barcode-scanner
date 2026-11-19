@@ -14,6 +14,14 @@
             targetField: @js($getTargetField()),
             scannerConfig: @js($getScannerConfig()),
             autoStop: @js($getAutoStop()),
+            texts: @js([
+                'loading' => __('Loading camera...'),
+                'pointAtCode' => __('Point camera at barcode...'),
+                'accessFailed' => __('Failed to access camera. Please check permissions.'),
+                'startFailed' => __('Failed to start camera. Please try again.'),
+                'scanned' => __('Scanned: :code'),
+                'fieldNotUpdated' => __('Scanned successfully, but failed to update field'),
+            ]),
         })"
         x-effect="presses && $nextTick(() => { loaded = true; openScanner() })"
     >

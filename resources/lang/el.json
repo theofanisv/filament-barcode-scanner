@@ -1,0 +1,11 @@
+{
+    "Scan Barcode": "Σάρωση κωδικού",
+    "Select Camera": "Επιλογή κάμερας",
+    "Start Camera": "Άνοιγμα κάμερας",
+    "Loading camera...": "Η κάμερα ανοίγει...",
+    "Point camera at barcode...": "Στρέψτε την κάμερα στον κωδικό...",
+    "Failed to access camera. Please check permissions.": "Δεν υπάρχει πρόσβαση στην κάμερα. Ελέγξτε ότι επιτρέπεται η χρήση της.",
+    "Failed to start camera. Please try again.": "Η κάμερα δεν άνοιξε. Δοκιμάστε ξανά.",
+    "Scanned: :code": "Σαρώθηκε: :code",
+    "Scanned successfully, but failed to update field": "Ο κωδικός σαρώθηκε, αλλά δεν συμπληρώθηκε στο πεδίο."
+}

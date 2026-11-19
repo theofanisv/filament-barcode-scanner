@@ -1,10 +1,26 @@
 import { BrowserMultiFormatReader, NotFoundException } from '@zxing/library';
 
+/**
+ * The status lines the scanner shows. The button's view passes them translated (`texts`); these are the fallbacks.
+ * `:code` in `scanned` is replaced by the scanned code.
+ */
+const defaultTexts = {
+    loading: 'Loading camera...',
+    pointAtCode: 'Point camera at barcode...',
+    accessFailed: 'Failed to access camera. Please check permissions.',
+    startFailed: 'Failed to start camera. Please try again.',
+    scanned: 'Scanned: :code',
+    fieldNotUpdated: 'Scanned successfully, but failed to update field',
+};
+
 export default function barcodeScannerComponent({
     targetField = null,
     scannerConfig = {},
-    autoStop = true
+    autoStop = true,
+    texts = {}
 }) {
+    texts = { ...defaultTexts, ...texts };
+
     return {
         isScanning: false,
         scannerStarted: false,
@@ -32,7 +48,7 @@ export default function barcodeScannerComponent({
 
             try {
                 this.isScanning = true;
-                this.statusMessage = 'Loading camera...';
+                this.statusMessage = texts.loading;
                 this.statusType = 'info';
 
                 // Get available cameras
@@ -44,7 +60,7 @@ export default function barcodeScannerComponent({
                 }
             } catch (error) {
                 console.error('Error opening scanner:', error);
-                this.setStatus('Failed to access camera. Please check permissions.', 'error');
+                this.setStatus(texts.accessFailed, 'error');
             }
         },
 
@@ -104,10 +120,10 @@ export default function barcodeScannerComponent({
                 );
 
                 this.scannerStarted = true;
-                this.setStatus('Point camera at barcode...', 'info');
+                this.setStatus(texts.pointAtCode, 'info');
             } catch (error) {
                 console.error('Error starting scanner:', error);
-                this.setStatus('Failed to start camera. Please try again.', 'error');
+                this.setStatus(texts.startFailed, 'error');
                 this.scannerStarted = false;
             }
         },
@@ -133,7 +149,7 @@ export default function barcodeScannerComponent({
             }
 
             // Show success message
-            this.setStatus(`Scanned: ${decodedText}`, 'success');
+            this.setStatus(texts.scanned.replace(':code', decodedText), 'success');
 
             // Close modal after short delay if auto-stop
             if (autoStop) {
@@ -194,7 +210,7 @@ export default function barcodeScannerComponent({
                 });
             } catch (error) {
                 console.error('Error updating field:', error);
-                this.setStatus('Scanned successfully, but failed to update field', 'error');
+                this.setStatus(texts.fieldNotUpdated, 'error');
             }
         },
 

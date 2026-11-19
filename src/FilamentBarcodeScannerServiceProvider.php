@@ -18,6 +18,14 @@ class FilamentBarcodeScannerServiceProvider extends PackageServiceProvider
             ->hasViews();
     }
 
+    public function packageRegistered(): void
+    {
+        // The popup's texts, as resources/lang/<locale>.json; an app's own lang/<locale>.json overrides them. Added
+        // here and not with hasTranslations(), which adds them at boot: Laravel reads a locale's JSON lines once, the
+        // first time anything is translated, and another provider may well translate something before this one boots.
+        $this->loadJsonTranslationsFrom(__DIR__ . '/../resources/lang');
+    }
+
     public function packageBooted(): void
     {
         // The scanner is an Alpine component that Filament fetches on demand: the button's view asks for it when the
